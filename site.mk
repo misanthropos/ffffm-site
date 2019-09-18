@@ -5,28 +5,18 @@ GLUON_FEATURES := \
 	ebtables-limit-arp \
 	ebtables-source-filter \
 	mesh-batman-adv-14 \
+	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
 	radvd \
 	radv-filterd \
 	respondd \
 	status-page \
-	web-advanced \
 	web-wizard \
-	web-private-wifi \
-	web-logging \
-
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
 	iptables \
 	haveged \
-	ffffm-banner_legacy \
-	ffffm-keep-radio-channel \
-	ffffm-button-bind \
-	ffffm-ath9k-broken-wifi-workaround \
-	gluon-ssid-changer \
-	respondd-module-airtime \
-
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
@@ -41,7 +31,11 @@ GLUON_MULTIDOMAIN := 1
 DEFAULT_GLUON_RELEASE := v3.4
 
 # Development branch information
+<<<<<<< HEAD
 GLUON_BRANCH ?= stable
+=======
+GLUON_BRANCH ?= dev
+>>>>>>> Domain Migration: Prepare (& Shrink) packages
 
 DEFAULT_GLUON_RELEASE := $(DEFAULT_GLUON_RELEASE)-$(GLUON_BRANCH)-$(shell date '+%m%d')
 
