@@ -38,7 +38,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v3.3
+DEFAULT_GLUON_RELEASE := v3.3.1
 
 # Development branch information
 GLUON_BRANCH ?= stable
@@ -59,3 +59,6 @@ GLUON_REGION ?= eu
 
 # Prefer ath10k firmware with given mesh support (ibss or 11s)
 GLUON_WLAN_MESH ?= 11s
+
+# Build only sysupgrade for deprecated
+GLUON_DEPRECATED ?= upgrade

@@ -1,5 +1,11 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v3.3.1-stable-2109
+- Erstellt am 21.09.2019
+- letztes Patch-Release von Gluon 2018
+- Neue Hardware und Bugfixes, siehe Gluon 2018.2.3 Release-Notes
+- Basis ist Gluon [v2018.2.3](https://gluon.readthedocs.io/en/v2018.2.3/)
+
 ### v3.3-stable-0909
 - Erstellt am 09.09.2019
 - erstes 11s-only-release
