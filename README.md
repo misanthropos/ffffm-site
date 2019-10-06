@@ -1,5 +1,11 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v3.4-stable-1006
+- Erstellt am 06.10.2019
+- Neue Hardware und Bugfixes, siehe Gluon 2019.1 Release-Notes
+- x86 benutzt jetzt SquashFS, und kann damit zurückgesetzt werden `firstboot`
+- Basis ist Gluon [v2019.1](https://gluon.readthedocs.io/en/v2019.1/)
+
 ### v3.3.1-stable-2109
 - Erstellt am 21.09.2019
 - letztes Patch-Release von Gluon 2018
