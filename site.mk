@@ -38,7 +38,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v3.3.1
+DEFAULT_GLUON_RELEASE := v3.4
 
 # Development branch information
 GLUON_BRANCH ?= stable
