@@ -33,11 +33,7 @@ GLUON_MULTIDOMAIN := 1
 DEFAULT_GLUON_RELEASE := v4.0
 
 # Development branch information
-<<<<<<< HEAD
 GLUON_BRANCH ?= stable
-=======
-GLUON_BRANCH ?= dev
->>>>>>> Domain Migration: Prepare (& Shrink) packages
 
 DEFAULT_GLUON_RELEASE := $(DEFAULT_GLUON_RELEASE)-$(GLUON_BRANCH)-$(shell date '+%m%d')
 

@@ -1,5 +1,11 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v4.0-stable-1210
+- Erstellt am 10.12.2019
+- Migriert legacybat_11s auf ffffm_singledomain
+- Automatische Migration am 07. Januar 2020 09:00:00 +0100
+- Basis ist Gluon [v2019.1](https://gluon.readthedocs.io/en/v2019.1/)
+
 ### v3.4-stable-1006
 - Erstellt am 06.10.2019
 - Neue Hardware und Bugfixes, siehe Gluon 2019.1 Release-Notes
