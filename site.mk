@@ -1,32 +1,24 @@
 GLUON_FEATURES := \
 	autoupdater \
+	config-mode-outdoor \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
-	ebtables-limit-arp \
 	ebtables-source-filter \
 	mesh-batman-adv-14 \
+	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
-	radvd \
 	radv-filterd \
 	respondd \
 	status-page \
-	web-advanced \
 	web-wizard \
-	web-private-wifi \
-	web-logging \
-
+	scheduled-domain-switch \
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
-	iptables \
 	haveged \
-	ffffm-banner_legacy \
 	ffffm-keep-radio-channel \
 	ffffm-button-bind \
-	ffffm-ath9k-broken-wifi-workaround \
-	gluon-ssid-changer \
 	respondd-module-airtime \
-
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
@@ -38,7 +30,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v3.4
+DEFAULT_GLUON_RELEASE := v4.0
 
 # Development branch information
 GLUON_BRANCH ?= stable
