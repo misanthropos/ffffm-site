@@ -4,7 +4,6 @@ GLUON_FEATURES := \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-source-filter \
-	mesh-batman-adv-14 \
 	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
 	radv-filterd \
