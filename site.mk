@@ -15,7 +15,6 @@ GLUON_FEATURES := \
 GLUON_SITE_PACKAGES := \
 	iwinfo \
 	haveged \
-	ffffm-keep-radio-channel \
 	ffffm-button-bind \
 	respondd-module-airtime \
 
