@@ -2,7 +2,7 @@
 
 ### v4.1-stable-0103
 - Erstellt am 03.01.2019
-- Nurnoch ein BATMAN15-Netz
+- Nur noch ein BATMAN15-Netz
 - "ffffm-keep-radio-channel" entfernt, siehe https://gluon.readthedocs.io/en/v2019.1.x/releases/v2019.1.html#outdoor-mode
 - Update NTP-Server
 - Angabe der "mcast_rate" für stabileres Mesh
