@@ -1,5 +1,13 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v4.1-stable-0103
+- Erstellt am 03.01.2019
+- Nur noch ein BATMAN15-Netz
+- "ffffm-keep-radio-channel" entfernt, siehe https://gluon.readthedocs.io/en/v2019.1.x/releases/v2019.1.html#outdoor-mode
+- Update NTP-Server
+- Angabe der "mcast_rate" für stabileres Mesh
+- Basis ist Gluon [v2019.1](https://gluon.readthedocs.io/en/v2019.1/)
+
 ### v4.0-stable-1210
 - Erstellt am 10.12.2019
 - Migriert legacybat_11s auf ffffm_singledomain

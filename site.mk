@@ -4,19 +4,16 @@ GLUON_FEATURES := \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-source-filter \
-	mesh-batman-adv-14 \
 	mesh-batman-adv-15 \
 	mesh-vpn-fastd \
 	radv-filterd \
 	respondd \
 	status-page \
 	web-wizard \
-	scheduled-domain-switch \
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
 	haveged \
-	ffffm-keep-radio-channel \
 	ffffm-button-bind \
 	respondd-module-airtime \
 
@@ -30,7 +27,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v4.0
+DEFAULT_GLUON_RELEASE := v4.1
 
 # Development branch information
 GLUON_BRANCH ?= stable
