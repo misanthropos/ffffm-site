@@ -27,10 +27,10 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v4.1
+DEFAULT_GLUON_RELEASE := v4.2
 
 # Development branch information
-GLUON_BRANCH ?= stable
+GLUON_BRANCH ?= dev
 
 DEFAULT_GLUON_RELEASE := $(DEFAULT_GLUON_RELEASE)-$(GLUON_BRANCH)-$(shell date '+%m%d')
 
