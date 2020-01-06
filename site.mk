@@ -16,6 +16,7 @@ GLUON_SITE_PACKAGES := \
 	haveged \
 	ffffm-button-bind \
 	respondd-module-airtime \
+	ffda-domain-director \
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
