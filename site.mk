@@ -1,6 +1,7 @@
 GLUON_FEATURES := \
 	autoupdater \
 	config-mode-outdoor \
+	config-mode-domain-select \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-source-filter \
