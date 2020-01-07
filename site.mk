@@ -11,6 +11,9 @@ GLUON_FEATURES := \
 	respondd \
 	status-page \
 	web-wizard \
+	web-private-wifi \
+	web-logging \
+	web-advanced \
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
