@@ -35,7 +35,7 @@ GLUON_MULTIDOMAIN := 1
 DEFAULT_GLUON_RELEASE := v4.2
 
 # Development branch information
-GLUON_BRANCH ?= test
+GLUON_BRANCH ?= stable
 
 DEFAULT_GLUON_RELEASE := $(DEFAULT_GLUON_RELEASE)-$(GLUON_BRANCH)-$(shell date '+%m%d')
 
