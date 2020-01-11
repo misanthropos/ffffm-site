@@ -3,6 +3,8 @@
 ### v4.2-stable-0111
 - Erstellt am 11.01.2019
 - Multidomain-fähig
+- Nodeseitige Vorbereitung des Domain Directors
+- Wiedereinfügen des "Advanced" Config-Modes
 - Basis ist Gluon [v2019.1.1](https://gluon.readthedocs.io/en/v2019.1.1/)
 
 ### v4.1-stable-0103
