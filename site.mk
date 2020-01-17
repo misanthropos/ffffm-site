@@ -1,6 +1,7 @@
 GLUON_FEATURES := \
 	autoupdater \
 	config-mode-outdoor \
+	config-mode-domain-select \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-source-filter \
@@ -10,12 +11,16 @@ GLUON_FEATURES := \
 	respondd \
 	status-page \
 	web-wizard \
+	web-private-wifi \
+	web-logging \
+	web-advanced \
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
 	haveged \
 	ffffm-button-bind \
 	respondd-module-airtime \
+	ffda-domain-director \
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
@@ -27,7 +32,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v4.1
+DEFAULT_GLUON_RELEASE := v4.2
 
 # Development branch information
 GLUON_BRANCH ?= stable

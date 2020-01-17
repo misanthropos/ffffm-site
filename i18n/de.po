@@ -31,3 +31,11 @@ msgstr ""
 "<a href=\"http://192.168.1.1\">http://192.168.1.1</a> zu erreichen.</p>"
 "<p>Viel Spaß mit deinem neuen Freifunk-Knoten und der Erkundung von Freifunk!</p>"
 
+msgid "gluon-config-mode:domain-select"
+msgstr ""
+"<p> Bitte wähle deine Domain aus. Beachte, dass nur Knoten derselben Domain miteinander meshen können.</p>"
+"<p> Solltest du dir unsicher sein, dann wähle 'Single Domain' aus.</p>"
+
+msgid "gluon-config-mode:domain"
+msgstr ""
+"Domain"
