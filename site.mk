@@ -21,6 +21,7 @@ GLUON_SITE_PACKAGES := \
 	ffffm-button-bind \
 	respondd-module-airtime \
 	ffda-domain-director \
+	gluon-web-ffda-domain-director \
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
