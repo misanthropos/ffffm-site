@@ -21,6 +21,7 @@ GLUON_SITE_PACKAGES := \
 	ffffm-button-bind \
 	respondd-module-airtime \
 	ffda-domain-director \
+	gluon-web-ffda-domain-director \
 
 include $(GLUON_SITEDIR)/specific_site.mk
 
@@ -32,7 +33,7 @@ GLUON_MULTIDOMAIN := 1
 # This is the Stable branch
 
 # Gluon Base Release
-DEFAULT_GLUON_RELEASE := v4.2
+DEFAULT_GLUON_RELEASE := v4.2.1
 
 # Development branch information
 GLUON_BRANCH ?= stable
