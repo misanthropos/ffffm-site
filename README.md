@@ -1,5 +1,10 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v4.2.1-stable-0118
+- Erstellt am 18.01.2019
+- Fix für v4.2: Domain Director aktiv
+- Basis ist Gluon [v2019.1.1](https://gluon.readthedocs.io/en/v2019.1.1/)
+
 ### v4.2-stable-0111
 - Erstellt am 11.01.2019
 - Multidomain-fähig
