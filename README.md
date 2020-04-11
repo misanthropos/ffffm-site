@@ -1,5 +1,9 @@
 ## Stable-Version der Frankfurter Freifunkfirmware
 
+### v4.3.1-stable-0325
+- Erstellt am 25.03.2020
+- Basis ist Gluon [v2020.1.1](https://gluon.readthedocs.io/en/v2020.1/releases/v2020.1.1.html)
+
 ### v4.3-stable-0225
 - Erstellt am 25.02.2020
 - Neue Hardware supported
