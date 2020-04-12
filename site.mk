@@ -115,6 +115,9 @@ GLUON_SITE_PACKAGES += \
 	ffffm-eol-ssid
 endif
 
+# Gluon Device Class specific features
+GLUON_FEATURES_standard := wireless-encryption-wpa3
+
 ### Specific Packages
 
 INCLUDE_USB := \
