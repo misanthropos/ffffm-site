@@ -17,7 +17,6 @@ GLUON_FEATURES := \
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
-	haveged \
 	ffffm-button-bind \
 	respondd-module-airtime \
 	ffda-domain-director \
