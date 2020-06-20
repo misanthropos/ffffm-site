@@ -6,6 +6,7 @@ set -ex
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
+make -f gluon.mk
 eval $(make -s -f helper.mk)
 
 echo -e "COMMIT_DESCRIPTION: ${COMMIT_DESCRIPTION}"
@@ -16,10 +17,6 @@ echo -e "GLUON_PRIORITY: ${GLUON_PRIORITY}"
 
 cd ..
 
-echo "Checking out ${GLUON_CHECKOUT}"
-git checkout "${GLUON_CHECKOUT}"
-git pull "${GLUON_REMOTE}" "${GLUON_CHECKOUT}"
-
 update() {
 	make update
 }
@@ -28,7 +25,7 @@ build() {
 	echo "Preparing build..."
 
 	export FORCE_UNSAFE_CONFIGURE=1
-	if [ "$GLUON_BRANCH" == "experimental" ]; then
+	if [ ! -z ${GLUON_VERBOSE} ]; then
 		export VERBOSE=V=1
 	else
 		export VERBOSE=
@@ -39,7 +36,7 @@ build() {
 	echo "building for targets '${SELECTED_TARGETS}'"
 	for target in ${SELECTED_TARGETS}; do
 		echo -e "Starting to build target \033[32m${target}\033[0m ..."
-		make GLUON_TARGET=${target} -j4 $VERBOSE
+		make GLUON_TARGET=${target} -j$(nproc) $VERBOSE
 	done
 }
 

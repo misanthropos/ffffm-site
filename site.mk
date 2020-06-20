@@ -42,7 +42,7 @@ ifndef GLUON_SITEDIR
 else
 	GIT_BRANCH := $(shell git -C $(GLUON_SITEDIR) rev-parse --abbrev-ref HEAD)
 	COMMIT_DESCRIPTION := $(shell git -C $(GLUON_SITEDIR) describe --tags --long)
-	BUILD_DATESTAMP := $(shell [ -f $(GLUON_SITEDIR)/build_date ] && cat $(GLUON_SITEDIR)/build_date || date '+%Y%m%d')
+	BUILD_DATESTAMP := $(shell [ -f $(GLUON_SITEDIR)/build_date ] && cat $(GLUON_SITEDIR)/build_date || date '+%m%d')
 	GIT_COMMIT := $(shell git -C $(GLUON_SITEDIR) rev-parse --short HEAD)
 	GLUON_COMMIT := $(shell git -C $(GLUON_SITEDIR)/.. rev-parse --short HEAD)
 endif
@@ -60,7 +60,6 @@ else ifeq ($(GIT_BRANCH),experimental)
 		# RC-Branch
 		DEFAULT_GLUON_BRANCH := experimental
 		DEFAULT_GLUON_RELEASE := $(DEFAULT_BASE_VERSION)-$(DEFAULT_GLUON_BRANCH)-$(BUILD_DATESTAMP)-$(GIT_COMMIT)-$(GLUON_COMMIT)
-		DEFAULT_GLUON_CHECKOUT := master
 else ifeq ($(GIT_BRANCH),stable)
 	# RC-Branch
 	DEFAULT_GLUON_BRANCH := rc
@@ -84,12 +83,8 @@ endif
 
 # Set final Branch and release
 
-DEFAULT_GLUON_REMOTE := origin
-
 GLUON_BRANCH ?= $(DEFAULT_GLUON_BRANCH)
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-GLUON_CHECKOUT ?= $(DEFAULT_GLUON_CHECKOUT)
-GLUON_REMOTE ?= $(DEFAULT_GLUON_REMOTE)
 
 # Default priority for updates.
 GLUON_PRIORITY ?= 0

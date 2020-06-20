@@ -1,0 +1,177 @@
+image: ffkabuildenv/buildenv:latest
+
+stages:
+- prepare
+- build
+- package
+
+variables:
+  GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID/site"
+  CI_PROJECT_DIR: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID"
+  PWD: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID"
+
+# Prepare build: Write current date into file. Will be used by all subsequent jobs for version number generation
+prepare_build:
+  stage: prepare
+  script:
+  - export
+  - pwd; ls
+  - date '+%m%d' > site/build_date
+  - git clone git://github.com/freifunk-gluon/gluon.git
+  - mv site gluon/site
+  - cd gluon/site
+  - ./ci.sh update
+  tags:
+    - ffffm
+  artifacts:
+    paths:
+    - gluon
+    expire_in: 2 days
+
+# Build jobs. Build every target in it's own container
+.build_template: &build_template
+  stage: build
+  cache:
+    untracked: false
+  retry: 2
+  script:
+  - cd $CI_BUILDS_DIR/$CI_CONCURRENT_PROJECT_ID
+  - '[ -z "$CI_BUILD_TAG" ] && git -C "$GIT_CLONE_PATH" checkout -B "$CI_COMMIT_REF_NAME" "$CI_COMMIT_SHA"'
+  - cd gluon/site
+  - ./ci.sh build
+  tags:
+    - ffffm
+    - firmware
+  artifacts:
+    paths:
+    - gluon/output/
+    expire_in: 1 day
+  dependencies:
+  - prepare_build
+
+build:ar71xx_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ar71xx-generic
+
+build:ar71xx_tiny:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ar71xx-tiny
+
+build:ar71xx_nand:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ar71xx-nand
+
+build:ath79_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ath79-generic
+
+build:brcm2708_bcm2708:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: brcm2708-bcm2708
+
+build:brcm2708_bcm2709:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: brcm2708-bcm2709
+
+build:brcm2708_bcm2710:
+  <<: *build_template
+  variables:
+    BROKEN: "1"
+    SELECTED_TARGETS: brcm2708-bcm2710
+
+build:lantiq_xrx200:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: lantiq-xrx200
+
+build:lantiq_xway:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: lantiq-xway
+
+build:mpc85xx_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: mpc85xx-generic
+
+build:mpc85xx_p1020:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: mpc85xx-p1020
+
+build:ipq40xx_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ipq40xx-generic
+
+build:ipq806x_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ipq806x-generic
+
+build:ramips_mt7621:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ramips-mt7621
+
+build:ramips_mt76x8:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: ramips-mt76x8
+
+build:x86_generic:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: x86-generic
+
+build:x86_64:
+  <<: *build_template
+  variables:
+    SELECTED_TARGETS: x86-64
+
+# Package job: collect all artifacts from the build jobs and create the manifest
+package:
+  stage: package
+  variables:
+    GIT_STRATEGY: none
+  cache:
+    untracked: false
+  tags:
+  - ffffm
+  script:
+  - mkdir tmp
+  - mv gluon/output/ . && rm -rf gluon/
+  - git clone git://github.com/freifunk-gluon/gluon.git
+  - mv output gluon/
+  - cd gluon
+  - ln -s ../ site
+  - cd site
+  - ./ci.sh manifest
+  artifacts:
+    paths:
+    - gluon/output/
+  dependencies:
+  - prepare_build
+  - build:ar71xx_generic
+  - build:ar71xx_nand
+  - build:ar71xx_tiny
+  - build:ath79_generic
+  - build:brcm2708_bcm2708
+  - build:brcm2708_bcm2709
+  - build:brcm2708_bcm2710
+  - build:lantiq_xrx200
+  - build:lantiq_xway
+  - build:ipq40xx_generic
+  - build:ipq806x_generic
+  - build:mpc85xx_generic
+  - build:mpc85xx_p1020
+  - build:ramips_mt7621
+  - build:ramips_mt76x8
+  - build:x86_generic
+  - build:x86_64
