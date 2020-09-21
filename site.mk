@@ -101,18 +101,7 @@ GLUON_LANGS ?= de
 GLUON_REGION ?= eu
 
 # Build only sysupgrade for deprecated
-GLUON_DEPRECATED ?= upgrade
-
-### Manual packages
-ifeq ($(GLUON_TARGET),ar71xx-tiny)
-GLUON_SITE_PACKAGES += \
-	ffffm-eol-ssid
-endif
-
-ifeq ($(GLUON_TARGET),ramips-rt305x)
-GLUON_SITE_PACKAGES += \
-	ffffm-eol-ssid
-endif
+GLUON_DEPRECATED ?= 0
 
 # Gluon Device Class specific features
 GLUON_FEATURES_standard := wireless-encryption-wpa3
