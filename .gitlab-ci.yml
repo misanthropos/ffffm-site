@@ -1,47 +1,36 @@
-image: ffkabuildenv/buildenv:latest
+image: docker.chaos.expert/ffffm/container/gluon-build:latest
 
 stages:
 - prepare
 - build
 - package
 
-variables:
-  GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID/site"
-  CI_PROJECT_DIR: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID"
-  PWD: "$CI_BUILDS_DIR/$CI_CONCURRENT_ID/$CI_PROJECT_NAMESPACE/$CI_PROJECT_ID"
-
 # Prepare build: Write current date into file. Will be used by all subsequent jobs for version number generation
 prepare_build:
   stage: prepare
-  script:
-  - export
-  - pwd; ls
-  - date '+%m%d' > site/build_date
-  - git clone git://github.com/freifunk-gluon/gluon.git
-  - mv site gluon/site
-  - cd gluon/site
-  - ./ci.sh update
   tags:
-    - ffffm
+  - ffffm
+  script:
+  - git clone git://github.com/freifunk-gluon/gluon.git
+  - mkdir gluon/site
+  - mv $(ls -A| grep -Ev '^gluon$') gluon/site/
+  - date '+%Y%m%d' > gluon/site/build_date
+  - gluon/site/build.sh update
   artifacts:
     paths:
-    - gluon
+    - gluon/
     expire_in: 2 days
 
 # Build jobs. Build every target in it's own container
 .build_template: &build_template
   stage: build
+  tags:
+  - ffffm
   cache:
     untracked: false
   retry: 2
   script:
-  - cd $CI_BUILDS_DIR/$CI_CONCURRENT_PROJECT_ID
-  - '[ -z "$CI_BUILD_TAG" ] && git -C "$GIT_CLONE_PATH" checkout -B "$CI_COMMIT_REF_NAME" "$CI_COMMIT_SHA"'
-  - cd gluon/site
-  - ./ci.sh build
-  tags:
-    - ffffm
-    - firmware
+  - gluon/site/build.sh build
   artifacts:
     paths:
     - gluon/output/
@@ -138,21 +127,12 @@ build:x86_64:
 # Package job: collect all artifacts from the build jobs and create the manifest
 package:
   stage: package
-  variables:
-    GIT_STRATEGY: none
-  cache:
-    untracked: false
   tags:
   - ffffm
+  cache:
+    untracked: false
   script:
-  - mkdir tmp
-  - mv gluon/output/ . && rm -rf gluon/
-  - git clone git://github.com/freifunk-gluon/gluon.git
-  - mv output gluon/
-  - cd gluon
-  - ln -s ../ site
-  - cd site
-  - ./ci.sh manifest
+  - gluon/site/build.sh manifest
   artifacts:
     paths:
     - gluon/output/

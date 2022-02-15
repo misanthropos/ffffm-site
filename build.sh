@@ -7,7 +7,7 @@ set -ex
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 make -f gluon.mk
-eval $(make -s -f helper.mk)
+eval "$(make -s -f helper.mk)"
 
 echo -e "COMMIT_DESCRIPTION: ${COMMIT_DESCRIPTION}"
 echo -e "GLUON_CHECKOUT: ${GLUON_CHECKOUT}"
@@ -36,7 +36,7 @@ build() {
 	echo "building for targets '${SELECTED_TARGETS}'"
 	for target in ${SELECTED_TARGETS}; do
 		echo -e "Starting to build target \033[32m${target}\033[0m ..."
-		make GLUON_TARGET=${target} -j$(nproc) $VERBOSE
+		make GLUON_TARGET=${target} -j"$(nproc)" $VERBOSE
 	done
 }
 
