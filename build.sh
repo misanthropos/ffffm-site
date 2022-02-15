@@ -4,8 +4,7 @@
 
 set -ex
 
-HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$HERE"
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 eval $(make -s -f helper.mk)
 
@@ -37,10 +36,10 @@ build() {
 
 	make show-release $VERBOSE
 
-	for target in ${SELECTED_TARGETS}
-	do
-	    echo -e "Starting to build target \033[32m${target}\033[0m ..."
-	    make GLUON_TARGET=${target} -j4 $VERBOSE
+	echo "building for targets '${SELECTED_TARGETS}'"
+	for target in ${SELECTED_TARGETS}; do
+		echo -e "Starting to build target \033[32m${target}\033[0m ..."
+		make GLUON_TARGET=${target} -j4 $VERBOSE
 	done
 }
 
@@ -63,9 +62,12 @@ manifest() {
 	make manifest $VERBOSE
 }
 
-if [[ $1 =~ ^(build|manifest|build_all|update)$ ]]; then
-  "$@"
+commands="build|manifest|build_all|update"
+if [[ $1 =~ ^($commands)$ ]]; then
+	"$@"
 else
-  echo "Invalid subcommand $1" >&2
-  exit 1
+	echo >&2 ''
+	echo >&2 "Invalid subcommand $1"
+	echo >&2 "Usage: $0 [${commands}]"
+	exit 1
 fi

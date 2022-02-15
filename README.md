@@ -32,15 +32,15 @@ Vorbereitung
 git clone https://github.com/freifunk-gluon/gluon
 git clone https://chaos.expert/FFFFM/site.git gluon/site
 cd gluon/site
-./ci.sh update
+./build.sh update
 ```
 
 Bauen aller targets
 ```bash
-./ci.sh build_all
+./build.sh build_all
 ```
 
 Bauen einer Auswahl an Targets
 ```bash
-SELECTED_TARGETS=x86-64 ./site/ci.sh build
+SELECTED_TARGETS=x86-64 ./site/build.sh build
 ``` 
