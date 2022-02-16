@@ -5,7 +5,7 @@ stages:
 - build
 - package
 
-# Prepare build: Write current date into file. Will be used by all subsequent jobs for version number generation
+# Setup build environment and prepare tooling, sets current date as build date to be consistent between targets
 prepare_build:
   stage: prepare
   tags:
@@ -16,30 +16,15 @@ prepare_build:
   - mv $(ls -A| grep -Ev '^gluon$') gluon/site/
   - date '+%Y%m%d' > gluon/site/build_date
   - gluon/site/build.sh update
-  artifacts:
-    paths:
-    - gluon/
-    expire_in: 2 days
-
-prepare_modules:
-  stage: build
-  tags:
-  - ffffm
-  cache:
-    untracked: false
-  retry: 2
-  script:
   - cd gluon
   - make  -j"$(nproc)" openwrt/staging_dir/hostpkg/bin/lua
   artifacts:
     paths:
     - gluon/
-    expire_in: 2 day
-  needs:
-  - prepare_build
+    expire_in: 2 days
 
-# Build jobs. Build every target in it's own container
-.build_template: &build_template
+# Build jobs. Build every target in its own container
+build:
   stage: build
   tags:
   - ffffm
@@ -47,99 +32,34 @@ prepare_modules:
     untracked: false
   retry: 2
   script:
+  - if [[ -n "${TARGETS}" ]] && ! echo "${TARGETS}" | grep "${SELECTED_TARGETS}"; then echo "Skipping"; exit; fi
   - gluon/site/build.sh build
   artifacts:
     paths:
     - gluon/output/
     expire_in: 1 day
   needs:
-  - prepare_modules
-
-build:ar71xx_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ar71xx-generic
-
-build:ar71xx_tiny:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ar71xx-tiny
-
-build:ar71xx_nand:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ar71xx-nand
-
-build:ath79_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ath79-generic
-
-build:brcm2708_bcm2708:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: brcm2708-bcm2708
-
-build:brcm2708_bcm2709:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: brcm2708-bcm2709
-
-build:brcm2708_bcm2710:
-  <<: *build_template
-  variables:
-    BROKEN: "1"
-    SELECTED_TARGETS: brcm2708-bcm2710
-
-build:lantiq_xrx200:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: lantiq-xrx200
-
-build:lantiq_xway:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: lantiq-xway
-
-build:mpc85xx_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: mpc85xx-generic
-
-build:mpc85xx_p1020:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: mpc85xx-p1020
-
-build:ipq40xx_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ipq40xx-generic
-
-build:ipq806x_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ipq806x-generic
-
-build:ramips_mt7621:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ramips-mt7621
-
-build:ramips_mt76x8:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: ramips-mt76x8
-
-build:x86_generic:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: x86-generic
-
-build:x86_64:
-  <<: *build_template
-  variables:
-    SELECTED_TARGETS: x86-64
+  - prepare_build
+  parallel:
+    matrix:
+      - SELECTED_TARGETS:
+          - ar71xx-generic
+          - ar71xx-tiny
+          - ar71xx-nand
+          - ath79-generic
+          - brcm2708-bcm2708
+          - brcm2708-bcm2709
+          - brcm2708-bcm2710
+          - lantiq-xrx200
+          - lantiq-xway
+          - mpc85xx-generic
+          - mpc85xx-p1020
+          - ipq40xx-generic
+          - ipq806x-generic
+          - ramips-mt7621
+          - ramips-mt76x8
+          - x86-generic
+          - x86-64
 
 # Package job: collect all artifacts from the build jobs and create the manifest
 package:
@@ -153,22 +73,6 @@ package:
   artifacts:
     paths:
     - gluon/output/
-  dependencies:
+  needs:
   - prepare_build
-  - build:ar71xx_generic
-  - build:ar71xx_nand
-  - build:ar71xx_tiny
-  - build:ath79_generic
-  - build:brcm2708_bcm2708
-  - build:brcm2708_bcm2709
-  - build:brcm2708_bcm2710
-  - build:lantiq_xrx200
-  - build:lantiq_xway
-  - build:ipq40xx_generic
-  - build:ipq806x_generic
-  - build:mpc85xx_generic
-  - build:mpc85xx_p1020
-  - build:ramips_mt7621
-  - build:ramips_mt76x8
-  - build:x86_generic
-  - build:x86_64
+  - build
