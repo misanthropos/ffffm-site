@@ -21,6 +21,23 @@ prepare_build:
     - gluon/
     expire_in: 2 days
 
+prepare_modules:
+  stage: build
+  tags:
+  - ffffm
+  cache:
+    untracked: false
+  retry: 2
+  script:
+  - cd gluon
+  - make  -j"$(nproc)" openwrt/staging_dir/hostpkg/bin/lua
+  artifacts:
+    paths:
+    - gluon/
+    expire_in: 2 day
+  needs:
+  - prepare_build
+
 # Build jobs. Build every target in it's own container
 .build_template: &build_template
   stage: build
@@ -35,8 +52,8 @@ prepare_build:
     paths:
     - gluon/output/
     expire_in: 1 day
-  dependencies:
-  - prepare_build
+  needs:
+  - prepare_modules
 
 build:ar71xx_generic:
   <<: *build_template
