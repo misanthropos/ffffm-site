@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # src: https://git.darmstadt.ccc.de/ffda/site/blob/master/contrib/genpkglist.py
+
 import os
 from collections import defaultdict
 
 from jinja2 import Template
-from pathlib import Path
 
 # path to your gluon checkout, will be used to find targets and devices
-GLUON_DIR = str(Path.home()) + '/git/gluon/'
+GLUON_DIR = os.path.join(os.path.dirname(__file__), '../..')
 
 
 class PackageList:
@@ -167,7 +167,7 @@ pkglists.append(PKGS_PCI_NET)
 
 PKGS_TLS = PackageList('TLS', [
     'ca-bundle',
-    'libustream-opensl'
+    'libustream-openssl'
 ])
 pkglists.append(PKGS_TLS)
 
