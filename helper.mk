@@ -6,5 +6,5 @@ echo:
 
 	$(info export GLUON_CHECKOUT="$(GLUON_CHECKOUT)")
 	$(info export GLUON_RELEASE="$(GLUON_RELEASE)")
-	$(info export GLUON_BRANCH="$(GLUON_BRANCH)")
+	$(info export GLUON_AUTOUPDATER_BRANCH="$(GLUON_AUTOUPDATER_BRANCH)")
 	$(info export GLUON_PRIORITY="$(GLUON_PRIORITY)")

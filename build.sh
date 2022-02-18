@@ -2,7 +2,7 @@
 
 # Based on https://gitlab.karlsruhe.freifunk.net/firmware/site/-/blob/gluon-v2020.1.x/ci.sh by Julian Schuh and Simon Terzenbach
 
-set -ex
+set -e
 
 if [[ -n "$2" ]] && [[ -r "$2" ]]; then key_file="$(realpath "$2")"; fi
 if [[ -n "$3" ]]; then manifest_file="$(realpath "$3")"; fi
@@ -12,11 +12,13 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 make -f gluon.mk
 eval "$(make -s -f helper.mk)"
 
+echo ''
 echo -e "COMMIT_DESCRIPTION: ${COMMIT_DESCRIPTION}"
 echo -e "GLUON_CHECKOUT: ${GLUON_CHECKOUT}"
-echo -e "GLUON_BRANCH: ${GLUON_BRANCH}"
+echo -e "GLUON_AUTOUPDATER_BRANCH: ${GLUON_AUTOUPDATER_BRANCH}"
 echo -e "GLUON_RELEASE: ${GLUON_RELEASE}"
 echo -e "GLUON_PRIORITY: ${GLUON_PRIORITY}"
+echo ''
 
 cd ..
 
