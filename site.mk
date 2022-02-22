@@ -36,7 +36,7 @@ endif
 ifndef GLUON_SITEDIR
 	GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 	COMMIT_DESCRIPTION := $(shell git describe --tags --long)
-	BUILD_DATESTAMP := $(shell [ -f build_date ] && cat build_date || date '+%m%d')
+	BUILD_DATESTAMP := $(shell [ -f build_date ] && cat build_date || date '+%Y%m%d')
 	GIT_COMMIT := $(shell git rev-parse --short HEAD)
 	GLUON_COMMIT := $(shell git -C .. rev-parse --short HEAD)
 else
@@ -60,7 +60,6 @@ else ifeq ($(GIT_BRANCH),experimental)
 		# RC-Branch
 		DEFAULT_GLUON_BRANCH := experimental
 		DEFAULT_GLUON_RELEASE := $(DEFAULT_BASE_VERSION)-$(DEFAULT_GLUON_BRANCH)-$(BUILD_DATESTAMP)-$(GIT_COMMIT)-$(GLUON_COMMIT)
-		DEFAULT_GLUON_CHECKOUT := master
 else ifeq ($(GIT_BRANCH),stable)
 	# RC-Branch
 	DEFAULT_GLUON_BRANCH := rc
@@ -84,12 +83,9 @@ endif
 
 # Set final Branch and release
 
-DEFAULT_GLUON_REMOTE := origin
-
-GLUON_BRANCH ?= $(DEFAULT_GLUON_BRANCH)
+GLUON_AUTOUPDATER_BRANCH ?= $(DEFAULT_GLUON_BRANCH)
+GLUON_AUTOUPDATER_ENABLED ?= 1
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-GLUON_CHECKOUT ?= $(DEFAULT_GLUON_CHECKOUT)
-GLUON_REMOTE ?= $(DEFAULT_GLUON_REMOTE)
 
 # Default priority for updates.
 GLUON_PRIORITY ?= 0
@@ -101,18 +97,7 @@ GLUON_LANGS ?= de
 GLUON_REGION ?= eu
 
 # Build only sysupgrade for deprecated
-GLUON_DEPRECATED ?= upgrade
-
-### Manual packages
-ifeq ($(GLUON_TARGET),ar71xx-tiny)
-GLUON_SITE_PACKAGES += \
-	ffffm-eol-ssid
-endif
-
-ifeq ($(GLUON_TARGET),ramips-rt305x)
-GLUON_SITE_PACKAGES += \
-	ffffm-eol-ssid
-endif
+GLUON_DEPRECATED ?= 0
 
 # Gluon Device Class specific features
 GLUON_FEATURES_standard := wireless-encryption-wpa3
@@ -231,11 +216,11 @@ EXCLUDE_PCI_NET := \
 
 INCLUDE_TLS := \
     ca-bundle \
-    libustream-opensl
+    libustream-openssl
 
 EXCLUDE_TLS := \
     -ca-bundle \
-    -libustream-opensl
+    -libustream-openssl
 
 ifeq ($(GLUON_TARGET),ar71xx-generic)
     GLUON_SITE_PACKAGES += $(INCLUDE_TLS) $(INCLUDE_USB) $(INCLUDE_USB_NET) $(INCLUDE_USB_SERIAL) $(INCLUDE_USB_STORAGE)
