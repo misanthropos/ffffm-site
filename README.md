@@ -53,3 +53,4 @@ GitLab CI wird verwendet, um Images automatisiert zu bauen. Der Build kann durch
 | `TARGETS`       | Liste um die anzahl der zu bauenden Targets einzuschränken. |
 | `SIGNING_KEY`   | Key oder Key Datei zum signieren der Firmware.              |
 | `GLUON_VERBOSE` | Wenn nicht leer werden mehr debug informationen ausgegeben. |
+| `UPLOAD`        | Upload feature branch as experimental.                      |

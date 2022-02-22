@@ -67,12 +67,27 @@ package:
   - ffffm
   cache:
     untracked: false
+  variables:
+    SSH_OPTS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+    # SSH_PRIVATE_KEY -----BEGIN PRI[...]
+    # FIRMWARE_SERVER user@host:/deployment/base/path/
   script:
   - gluon/site/build.sh manifest
   - if [[ -n "${SIGNING_KEY}" ]]; then gluon/site/build.sh sign "${SIGNING_KEY}" gluon/output/images/sysupgrade/*.manifest; fi
+
+  - if [[ "${CI_COMMIT_BRANCH}" != "stable" ]] && [[ "${CI_COMMIT_BRANCH}" != "next" ]] && [[ "${CI_COMMIT_BRANCH}" != "experimental" ]] && [[ -z "${UPLOAD}" ]]; then echo "Skipping upload of feature branch"; exit; fi
+  - if [[ -z "${FIRMWARE_SERVER}" ]] || [[ -z "${SSH_PRIVATE_KEY}"  ]]; then echo 'Skipping deployment'; exit; fi
+
+  - eval $(ssh-agent -s) && ssh-add <(echo "${SSH_PRIVATE_KEY}")
+  - eval "$(cd gluon/site/; make -s -f helper.mk)"
+  - RELEASE_PREFIX=$(echo gluon/output/packages/* | sed -E 's~(.+)/([^-]+-[^-]+)-(.+)~\2~')
+  - RELEASE=${RELEASE_PREFIX}-${GLUON_RELEASE}
+  - rsync -vAax -e "ssh -q ${SSH_OPTS}" gluon/output/ "${FIRMWARE_SERVER}archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/"
+  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/packages/${RELEASE}\" \"modules/${RELEASE}\""
+  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/images/\" \"images/${GLUON_AUTOUPDATER_BRANCH}\""
   artifacts:
     paths:
-    - gluon/output/
+    - gluon/output/images/sysupgrade/*.manifest
   needs:
   - prepare_build
   - build
