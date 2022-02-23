@@ -83,7 +83,7 @@ package:
   - RELEASE_PREFIX=$(echo gluon/output/packages/* | sed -E 's~(.+)/([^-]+-[^-]+)-(.+)~\2~')
   - RELEASE=${RELEASE_PREFIX}-${GLUON_RELEASE}
   - rsync -vAax -e "ssh -q ${SSH_OPTS}" gluon/output/ "${FIRMWARE_SERVER}archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/"
-  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/packages/${RELEASE}\" \"modules/${RELEASE}\""
+  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/packages/${RELEASE}/\" \"modules/${RELEASE}\""
   - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/images/\" \"images/${GLUON_AUTOUPDATER_BRANCH}\""
   artifacts:
     paths:
