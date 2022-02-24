@@ -46,7 +46,7 @@ else
 	GIT_COMMIT := $(shell git -C $(GLUON_SITEDIR) rev-parse --short HEAD)
 	GLUON_COMMIT := $(shell git -C $(GLUON_SITEDIR)/.. rev-parse --short HEAD)
 endif
-
+GIT_BRANCH := $(shell test -n "${CI_COMMIT_BRANCH}" && echo "${CI_COMMIT_BRANCH}" || echo "${GIT_BRANCH}")
 
 ### Build Release Name
 # Default: Goto Experimental
