@@ -3,5 +3,5 @@ GLUON_SITE_FEEDS='ffffm_packages ffda_packages'
 PACKAGES_FFFFM_PACKAGES_REPO=https://github.com/freifunk-ffm/packages.git
 PACKAGES_FFFFM_PACKAGES_COMMIT=b0e20a0871cb4ed1fac9569dbbc4aafea095cd07
 
-PACKAGES_FFDA_PACKAGES_REPO=https://github.com/freifunk-darmstadt/ffda-packages.git
-PACKAGES_FFDA_PACKAGES_COMMIT=26e9be0a567d643e078c24b54a9f1cac313f7693
+PACKAGES_FFDA_PACKAGES_REPO=https://git.darmstadt.ccc.de/ffda/firmware/packages.git
+PACKAGES_FFDA_PACKAGES_COMMIT=d940edbe8ee74207a3ce9fe9ef0bad5745f5cf25
