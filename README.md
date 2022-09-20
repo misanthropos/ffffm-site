@@ -79,14 +79,14 @@ reboot
 ### CI
 Die GitLab CI wird verwendet, um Images automatisiert zu bauen. Der Build kann durch folgende Umgebungsvariablen gesteuert werden:
 
-| Variable          | Funktion                                                    |
-|-------------------|-------------------------------------------------------------|
-| `FIRMWARE_SERVER` | Firmware Server, bspw. `user@host:/srv/firmware/`           |
-| `GLUON_VERBOSE`   | Wenn nicht leer werden mehr debug informationen ausgegeben. |
-| `SIGNING_KEY`     | Key oder Key Datei zum signieren der Firmware.              |
-| `SSH_PRIVATE_KEY` | SSH Key zum Upload der Images auf den Firmware Server.      |
-| `TARGETS`         | Liste um die Anzahl der zu bauenden Targets einzuschränken. |
-| `UPLOAD`          | Upload  des Feature Branches als experimental.              |
+| Variable          | Funktion                                                                          |
+|-------------------|-----------------------------------------------------------------------------------|
+| `FIRMWARE_SERVER` | Firmware Server, bspw. `user@host:/srv/firmware/`                                 |
+| `GLUON_VERBOSE`   | Wenn nicht leer werden mehr debug informationen ausgegeben. Bspw: `1`, `s`, `sc`  |
+| `SIGNING_KEY`     | Key oder Key Datei zum signieren der Firmware.                                    |
+| `SSH_PRIVATE_KEY` | SSH Key zum Upload der Images auf den Firmware Server.                            |
+| `TARGETS`         | Liste um die Anzahl der zu bauenden Targets einzuschränken.                       |
+| `UPLOAD`          | Upload  des Feature Branches als experimental.                                    |
 
 ### Firmware Server Struktur
 ```

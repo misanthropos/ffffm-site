@@ -30,8 +30,10 @@ build() {
 	echo 'Preparing build...'
 
 	export FORCE_UNSAFE_CONFIGURE=1
+	PROCS=$(nproc)
 	if [ -n "${GLUON_VERBOSE}" ]; then
-		export VERBOSE=V=1
+		export VERBOSE=V=${GLUON_VERBOSE:-1}
+		PROCS=1
 	else
 		export VERBOSE=
 	fi
@@ -41,7 +43,7 @@ build() {
 	echo "building for targets '${SELECTED_TARGETS}'"
 	for target in ${SELECTED_TARGETS}; do
 		echo -e "Starting to build target \033[32m${target}\033[0m ..."
-		make GLUON_TARGET="${target}" -j"$(nproc)" $VERBOSE
+		make GLUON_TARGET="${target}" -j"${PROCS}" $VERBOSE
 	done
 }
 
