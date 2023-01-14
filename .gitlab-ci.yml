@@ -31,11 +31,15 @@ build:
   cache:
     untracked: false
   retry: 2
-  script:
+  before_script:
   - if [[ -n "${TARGETS}" ]] && ! echo "${TARGETS}" | grep "${SELECTED_TARGETS}"; then echo "Skipping"; exit; fi
-  - gluon/site/build.sh build
+  - mkdir logs
+  script:
+  - gluon/site/build.sh build 2>&1 | tee logs/log-$(echo -n "${SELECTED_TARGETS}" | tr -c '[:alnum:]._-' '_').log
   artifacts:
+    when: always
     paths:
+    - logs/
     - gluon/output/
     expire_in: 1 day
   needs:
