@@ -30,12 +30,11 @@ build() {
 	echo 'Preparing build...'
 
 	export FORCE_UNSAFE_CONFIGURE=1
-	PROCS=$(nproc)
+	export VERBOSE=V=s
 	if [ -n "${GLUON_VERBOSE}" ]; then
-		export VERBOSE=V=${GLUON_VERBOSE:-1}
 		PROCS=1
 	else
-		export VERBOSE=
+		PROCS=$(nproc)
 	fi
 
 	make show-release $VERBOSE
@@ -58,7 +57,7 @@ manifest() {
 	echo 'Preparing build...'
 
 	export FORCE_UNSAFE_CONFIGURE=1
-	export VERBOSE=V=1
+	export VERBOSE=V=s
 
 	make show-release $VERBOSE
 
