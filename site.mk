@@ -19,7 +19,6 @@ GLUON_SITE_PACKAGES := \
 	ca-bundle \
 	iwinfo \
 	libustream-wolfssl \
-	ffffm-button-bind \
 	respondd-module-airtime \
 	ffda-domain-director \
 	gluon-web-ffda-domain-director
