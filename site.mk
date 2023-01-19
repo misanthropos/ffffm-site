@@ -23,6 +23,9 @@ GLUON_SITE_PACKAGES := \
 	ffda-domain-director \
 	gluon-web-ffda-domain-director
 
+GLUON_SITE_PACKAGES_standard := \
+	ffda-gluon-usteer
+
 # Enable multidomain support
 GLUON_MULTIDOMAIN := 1
 
