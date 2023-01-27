@@ -20,9 +20,7 @@ GLUON_SITE_PACKAGES := \
 	ca-bundle \
 	iwinfo \
 	libustream-wolfssl \
-	respondd-module-airtime \
-	ffda-domain-director \
-	gluon-web-ffda-domain-director
+	respondd-module-airtime
 
 GLUON_SITE_PACKAGES_standard := \
 	ffda-gluon-usteer
@@ -348,4 +346,3 @@ ifeq ($(GLUON_TARGET),x86-geode)
 endif
 
 # no pkglists for target x86-legacy
-
