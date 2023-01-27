@@ -1,6 +1,5 @@
 GLUON_FEATURES := \
 	autoupdater \
-	config-mode-outdoor \
 	config-mode-domain-select \
 	config-mode-geo-location-osm \
 	ebtables-filter-multicast \
