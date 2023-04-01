@@ -11,6 +11,8 @@ prepare_build:
   tags:
   - ffffm
   script:
+  - ls -la /gluon
+  - git config --global --add safe.directory '*'
   - git clone https://github.com/freifunk-gluon/gluon.git
   - mkdir gluon/site
   - mv $(ls -A| grep -Ev '^gluon$') gluon/site/
