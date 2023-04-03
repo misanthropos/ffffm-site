@@ -10,6 +10,8 @@ prepare_build:
   stage: prepare
   tags:
   - ffffm
+  before_script:
+  - git config --global --add safe.directory '*'
   script:
   - git clone https://github.com/freifunk-gluon/gluon.git
   - mkdir gluon/site
@@ -34,6 +36,7 @@ build:
   before_script:
   - if [[ -n "${TARGETS}" ]] && ! echo "${TARGETS}" | grep "${SELECTED_TARGETS}"; then echo "Skipping"; exit; fi
   - mkdir logs
+  - git config --global --add safe.directory '*'
   script:
   - gluon/site/build.sh build 2>&1 | tee logs/log-$(echo -n "${SELECTED_TARGETS}" | tr -c '[:alnum:]._-' '_').log
   artifacts:
@@ -61,6 +64,7 @@ build:
           - ramips-mt7620
           - ramips-mt7621
           - ramips-mt76x8
+          - rockchip-armv8
           - sunxi-cortexa7
           - x86-generic
           - x86-64
@@ -76,6 +80,8 @@ package:
     SSH_OPTS: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     # SSH_PRIVATE_KEY -----BEGIN PRI[...]
     # FIRMWARE_SERVER user@host:/deployment/base/path/
+  before_script:
+  - git config --global --add safe.directory '*'
   script:
   - gluon/site/build.sh manifest
   - if [[ -n "${SIGNING_KEY}" ]]; then gluon/site/build.sh sign "${SIGNING_KEY}" gluon/output/images/sysupgrade/*.manifest; fi
