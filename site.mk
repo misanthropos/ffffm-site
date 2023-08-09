@@ -11,6 +11,7 @@ GLUON_FEATURES := \
 	respondd \
 	status-page \
 	web-advanced \
+    web-cellular \
 	web-logging \
 	web-private-wifi \
 	web-wizard
