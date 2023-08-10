@@ -1,7 +1,6 @@
 GLUON_FEATURES := \
 	autoupdater \
 	config-mode-domain-select \
-	config-mode-geo-location-osm \
 	ebtables-filter-multicast \
 	ebtables-filter-ra-dhcp \
 	ebtables-source-filter \
@@ -11,19 +10,22 @@ GLUON_FEATURES := \
 	respondd \
 	status-page \
 	web-advanced \
-	web-cellular \
 	web-logging \
 	web-private-wifi \
 	web-wizard
 
+GLUON_FEATURES_standard := \
+	config-mode-geo-location-osm \
+	web-cellular
+
 GLUON_SITE_PACKAGES := \
-	ca-bundle \
 	iwinfo \
-	libustream-wolfssl \
 	respondd-module-airtime
 
 GLUON_SITE_PACKAGES_standard := \
-	ffda-gluon-usteer
+	ca-bundle \
+	ffda-gluon-usteer \
+	libustream-wolfssl
 
 # Enable multidomain support
 GLUON_MULTIDOMAIN := 1
