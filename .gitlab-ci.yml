@@ -1,52 +1,52 @@
-image: docker.chaos.expert/ffffm/container/gluon-build:latest
+image: ghcr.io/freifunk-gluon/gluon-build:master
 
 stages:
-- prepare
-- build
-- package
+  - prepare
+  - build
+  - package
 
 # Setup build environment and prepare tooling, sets current date as build date to be consistent between targets
 prepare_build:
   stage: prepare
   tags:
-  - ffffm
+    - ffffm
   before_script:
-  - git config --global --add safe.directory '*'
+    - git config --global --add safe.directory '*'
   script:
-  - git clone https://github.com/freifunk-gluon/gluon.git
-  - mkdir gluon/site
-  - mv $(ls -A| grep -Ev '^gluon$') gluon/site/
-  - date '+%Y%m%d' > gluon/site/build_date
-  - gluon/site/build.sh update
-  - cd gluon
-  - make  -j"$(nproc)" openwrt/staging_dir/hostpkg/bin/lua
+    - git clone https://github.com/freifunk-gluon/gluon.git
+    - mkdir gluon/site
+    - mv $(ls -A| grep -Ev '^gluon$') gluon/site/
+    - date '+%Y%m%d' > gluon/site/build_date
+    - gluon/site/build.sh update
+    - cd gluon
+    - make  -j"$(nproc)" openwrt/staging_dir/hostpkg/bin/lua
   artifacts:
     paths:
-    - gluon/
+      - gluon/
     expire_in: 2 days
 
 # Build jobs. Build every target in its own container
 build:
   stage: build
   tags:
-  - ffffm
+    - ffffm
   cache:
     untracked: false
   retry: 2
   before_script:
-  - if [[ -n "${TARGETS}" ]] && ! echo "${TARGETS}" | grep "${SELECTED_TARGETS}"; then echo "Skipping"; exit; fi
-  - mkdir logs
-  - git config --global --add safe.directory '*'
+    - if [[ -n "${TARGETS}" ]] && ! echo "${TARGETS}" | grep "${SELECTED_TARGETS}"; then echo "Skipping"; exit; fi
+    - mkdir logs
+    - git config --global --add safe.directory '*'
   script:
-  - gluon/site/build.sh build 2>&1 | tee logs/log-$(echo -n "${SELECTED_TARGETS}" | tr -c '[:alnum:]._-' '_').log
+    - gluon/site/build.sh build 2>&1 | tee logs/log-$(echo -n "${SELECTED_TARGETS}" | tr -c '[:alnum:]._-' '_').log
   artifacts:
     when: always
     paths:
-    - logs/
-    - gluon/output/
+      - logs/
+      - gluon/output/
     expire_in: 1 day
   needs:
-  - prepare_build
+    - prepare_build
   parallel:
     matrix:
       - SELECTED_TARGETS:
@@ -73,7 +73,7 @@ build:
 package:
   stage: package
   tags:
-  - ffffm
+    - ffffm
   cache:
     untracked: false
   variables:
@@ -81,24 +81,24 @@ package:
     # SSH_PRIVATE_KEY -----BEGIN PRI[...]
     # FIRMWARE_SERVER user@host:/deployment/base/path/
   before_script:
-  - git config --global --add safe.directory '*'
+    - apt update && apt -y install --no-install-recommends openssh-client
   script:
-  - gluon/site/build.sh manifest
-  - if [[ -n "${SIGNING_KEY}" ]]; then gluon/site/build.sh sign "${SIGNING_KEY}" gluon/output/images/sysupgrade/*.manifest; fi
+    - gluon/site/build.sh manifest
+    - if [[ -n "${SIGNING_KEY}" ]]; then gluon/site/build.sh sign "${SIGNING_KEY}" gluon/output/images/sysupgrade/*.manifest; fi
 
-  - if [[ "${CI_COMMIT_BRANCH}" != "stable" ]] && [[ "${CI_COMMIT_BRANCH}" != "next" ]] && [[ "${CI_COMMIT_BRANCH}" != "experimental" ]] && [[ -z "${CI_COMMIT_TAG}" ]] && [[ -z "${UPLOAD}" ]]; then echo "Skipping upload of feature branch"; exit; fi
-  - if [[ -z "${FIRMWARE_SERVER}" ]] || [[ -z "${SSH_PRIVATE_KEY}"  ]]; then echo 'Skipping deployment'; exit; fi
+    - if [[ "${CI_COMMIT_BRANCH}" != "stable" ]] && [[ "${CI_COMMIT_BRANCH}" != "next" ]] && [[ "${CI_COMMIT_BRANCH}" != "experimental" ]] && [[ -z "${CI_COMMIT_TAG}" ]] && [[ -z "${UPLOAD}" ]]; then echo "Skipping upload of feature branch"; exit; fi
+    - if [[ -z "${FIRMWARE_SERVER}" ]] || [[ -z "${SSH_PRIVATE_KEY}"  ]]; then echo 'Skipping deployment'; exit; fi
 
-  - eval $(ssh-agent -s) && ssh-add <(echo "${SSH_PRIVATE_KEY}")
-  - eval "$(cd gluon/site/; make -s -f helper.mk)"
-  - RELEASE_PREFIX=$(echo gluon/output/packages/* | sed -E 's~(.+)/([^-]+-[^-]+)-(.+)~\2~')
-  - RELEASE=${RELEASE_PREFIX}-${GLUON_RELEASE}
-  - rsync -vAax -e "ssh -q ${SSH_OPTS}" gluon/output/ "${FIRMWARE_SERVER}archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/"
-  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/packages/${RELEASE}/\" \"modules/${RELEASE}\""
-  - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/images/\" \"images/${GLUON_AUTOUPDATER_BRANCH}\""
+    - eval $(ssh-agent -s) && ssh-add <(echo "${SSH_PRIVATE_KEY}")
+    - eval "$(cd gluon/site/; make -s -f helper.mk)"
+    - RELEASE_PREFIX=$(echo gluon/output/packages/* | sed -E 's~(.+)/([^-]+-[^-]+)-(.+)~\2~')
+    - RELEASE=${RELEASE_PREFIX}-${GLUON_RELEASE}
+    - rsync -vAax -e "ssh -q ${SSH_OPTS}" gluon/output/ "${FIRMWARE_SERVER}archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/"
+    - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/packages/${RELEASE}/\" \"modules/${RELEASE}\""
+    - ssh -q ${SSH_OPTS} "${FIRMWARE_SERVER%%:*}" "set -e; cd \"${FIRMWARE_SERVER##*:}\"; ln -vnfs \"../archive/${GLUON_AUTOUPDATER_BRANCH}/${RELEASE}/images/\" \"images/${GLUON_AUTOUPDATER_BRANCH}\""
   artifacts:
     paths:
-    - gluon/output/images/sysupgrade/*.manifest
+      - gluon/output/images/sysupgrade/*.manifest
   needs:
-  - prepare_build
-  - build
+    - prepare_build
+    - build
