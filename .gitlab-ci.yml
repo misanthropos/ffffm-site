@@ -81,7 +81,7 @@ package:
     # SSH_PRIVATE_KEY -----BEGIN PRI[...]
     # FIRMWARE_SERVER user@host:/deployment/base/path/
   before_script:
-    - apt update && apt -y install --no-install-recommends openssh-client
+    - git config --global --add safe.directory '*'
   script:
     - gluon/site/build.sh manifest
     - if [[ -n "${SIGNING_KEY}" ]]; then gluon/site/build.sh sign "${SIGNING_KEY}" gluon/output/images/sysupgrade/*.manifest; fi
