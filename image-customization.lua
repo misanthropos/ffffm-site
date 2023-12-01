@@ -21,22 +21,16 @@ features({
 
 packages({
 	'iwinfo',
-	'respondd-module-airtime'
+	'respondd-module-airtime',
+    'htop',
+    'iperf3',
+    'wireguard-tools'
 })
 
 -- Packages and features for devices which are not flagged as tiny
-if not device_class('tiny') then
-	packages({
-		'ffda-gluon-usteer'
-	})
-
 	features({
-		'mesh-vpn-sqm',
-		'tls',
-		'web-cellular',
-		'wireless-encryption-wpa3'
+		'tls'
 	})
-end
 
 -- Custom package lists
 local pkgs_usb_hid = {
