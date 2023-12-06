@@ -16,7 +16,8 @@ GLUON_FEATURES := \
 
 GLUON_FEATURES_standard := \
 	config-mode-geo-location-osm \
-	web-cellular
+	web-cellular \
+	wireless-encryption-wpa3
 
 GLUON_SITE_PACKAGES := \
 	iwinfo \
@@ -103,9 +104,6 @@ GLUON_REGION ?= eu
 
 # Build only sysupgrade for deprecated
 GLUON_DEPRECATED ?= 0
-
-# Gluon Device Class specific features
-GLUON_FEATURES_standard := wireless-encryption-wpa3
 
 ### Specific Packages
 
