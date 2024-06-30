@@ -24,8 +24,10 @@ packages({
 	'respondd-module-airtime',
     'htop',
     'iperf3',
-    'wireguard-tools'
+    'wireguard-tools',
+    'gluon-authorized-keys'
 })
+
 
 -- Packages and features for devices which are not flagged as tiny
 	features({
