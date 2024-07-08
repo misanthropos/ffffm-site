@@ -25,7 +25,12 @@ packages({
     'htop',
     'iperf3',
     'wireguard-tools',
-    'gluon-authorized-keys'
+    'gluon-authorized-keys',
+    'tcpdump',
+    'mtr-nojson',
+    'ffffm-helper-tools',
+    'ffffm-banner',
+    'ffffm-keep-radio-channel'
 })
 
 
@@ -95,9 +100,10 @@ local pkgs_pci_net = {
 	'kmod-bnx2'
 }
 
-if target('ath79') then
-	packages(pkgs_usb_serial)
-end
+--if target('ath79') then
+--	packages(pkgs_usb_serial)
+--end
+
 
 if target('ipq40xx') then
 	packages(pkgs_usb_serial)
