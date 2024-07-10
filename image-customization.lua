@@ -19,25 +19,32 @@ features({
 	'web-wizard'
 })
 
+-- hellfire packages
 packages({
 	'iwinfo',
 	'respondd-module-airtime',
-    'htop',
-    'iperf3',
-    'wireguard-tools',
     'gluon-authorized-keys',
-    'tcpdump',
-    'mtr-nojson',
-    'ffffm-helper-tools',
     'ffffm-banner',
+    'ffffm-helper-tools',
     'ffffm-keep-radio-channel'
 })
 
+if not device_class('tiny') then
+        packages({
+            'htop',
+            'iperf3',
+            'wireguard-tools',
+            'mtr-nojson',
+            'tcpdump'
+        })
 
--- Packages and features for devices which are not flagged as tiny
-	features({
-		'tls'
-	})
+        features({
+--                'mesh-vpn-sqm',
+                'tls'
+--                'web-cellular',
+--                'wireless-encryption-wpa3'
+        })
+end
 
 -- Custom package lists
 local pkgs_usb_hid = {
@@ -100,9 +107,9 @@ local pkgs_pci_net = {
 	'kmod-bnx2'
 }
 
---if target('ath79') then
---	packages(pkgs_usb_serial)
---end
+if target('ath79') then
+	packages(pkgs_usb_serial)
+end
 
 
 if target('ipq40xx') then
