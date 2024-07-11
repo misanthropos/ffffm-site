@@ -16,7 +16,7 @@ features({
 	'web-advanced',
 	'web-logging',
 	'web-private-wifi',
-	'web-wizard'
+	'web-wizard',
 })
 
 -- hellfire packages
@@ -26,14 +26,15 @@ packages({
     'gluon-authorized-keys',
     'ffffm-banner',
     'ffffm-helper-tools',
-    'ffffm-keep-radio-channel'
+    'ffffm-keep-radio-channel',
+    '-hostapd-mini',
+    'hostapd-mbedtls'
 })
 
 if not device_class('tiny') then
         packages({
             'htop',
             'iperf3',
-            'wireguard-tools',
             'mtr-nojson',
             'tcpdump'
         })

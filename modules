@@ -4,8 +4,7 @@ GLUON_SITE_FEEDS='ffffm ffda community'
 #PACKAGES_FFFFM_COMMIT=ccd88fb7883628c6e554c841889726d7edec1c20
 PACKAGES_FFFFM_REPO="https://github.com/misanthropos/ffm-packages.git"
 PACKAGES_FFFFM_BRANCH=hellfire
-PACKAGES_FFFFM_COMMIT=cc101d4d30ecc409d9d495080d204807dee385f1
-
+PACKAGES_FFFFM_COMMIT=f4dc9afe283932f235c726d3abea9eb56668e4e1
 
 PACKAGES_FFDA_REPO=https://git.darmstadt.ccc.de/ffda/firmware/packages.git
 PACKAGES_FFDA_COMMIT=fb22679e053925b2838469046107dafcfe89e53a
