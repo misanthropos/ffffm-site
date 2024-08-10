@@ -27,6 +27,7 @@ packages({
     'ffffm-banner',
     'ffffm-helper-tools',
     'ffffm-keep-radio-channel',
+    'ffac-ssid-changer',
     '-hostapd-mini',
     'hostapd-mbedtls'
 })
